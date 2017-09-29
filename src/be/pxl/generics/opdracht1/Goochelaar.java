@@ -1,20 +1,22 @@
 package be.pxl.generics.opdracht1;
 
 public class Goochelaar {
-	private Animal animal;
-	private boolean checkedOnce;
-	
-	public <T extends Animal> void verstopDier(T animal) {
-		this.animal = animal;
-	}
-	
-	public void kijkInHoed() {
-		if(!checkedOnce){
-			System.out.println("Nothing's there!");
-			checkedOnce = true;
+	private Hoed<? extends Animal> hoed;
+
+	public void verstopDier() {
+		if (Math.random() <= 0.5) {
+			hoed = new Hoed<>(new Bunny());
 		} else {
-			System.out.printf("It's a %s!\n", animal.getClass().getSimpleName());
-			checkedOnce = false;
+			hoed = new Hoed<>(new Dove());
+		}
+	}
+
+	public void kijkInHoed() {
+		Animal dier = hoed.kijk();
+		if (dier == null) {
+			System.out.println("HOED IS LEEG");
+		} else {
+			System.out.println(dier.getClass().getSimpleName());
 		}
 	}
 }
